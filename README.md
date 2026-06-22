@@ -1,4 +1,4 @@
-![HockeyGear Banner](images/hockeygear_banner.png.png)
+![HockeyGear Banner](images/hockeygear_banner.png)
 
 # # 🏒 HockeyGear
 
