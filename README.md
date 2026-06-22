@@ -1,6 +1,6 @@
 ![HockeyGear Banner](images/hockeygear_banner.png)
 
-# # 🏒 HockeyGear
+## 🏒 HockeyGear
 
 
 ## Overview
@@ -23,11 +23,11 @@ HockeyGear maps to:
 ## Installation
 In a terminal with Git installed, enter the following: `git clone https://github.com/pryrotech.hockey-gear`
 
-##Usage
+## Usage
 To use HockeyGear, load `HockeyGear_Main.ps1` and follow the prompts.
 
-##Reporting Issues
+## Reporting Issues
 To report any errors, please submit a detailed issue under the **"Issues"** tab and we will attempt to remediate the issue as soon as possible.
 
-##Contributing
+## Contributing
 Pull requests welcome. Please follow coding and documentation standards.
