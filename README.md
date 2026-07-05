@@ -24,7 +24,15 @@ HockeyGear maps to:
 In a terminal with Git installed, enter the following: `git clone https://github.com/pryrotech.hockey-gear`
 
 ## Usage
-To use HockeyGear, load `HockeyGear_Main.ps1` and follow the prompts.
+From the repository root:
+- CLI: `pwsh -NoProfile -File .\engine\engine-main.ps1`
+- GUI: `pwsh -NoProfile -File .\engine\engine-main.ps1 -Gui`
+
+Or use the root wrapper if you prefer:
+- CLI: `pwsh -NoProfile -File .\HockeyGear_Main.ps1`
+- GUI: `pwsh -NoProfile -File .\HockeyGear_Main.ps1 -Gui`
+
+The GUI uses the banner image from `assets/images/hockeygear_banner.png`.
 
 ## Reporting Issues
 To report any errors, please submit a detailed issue under the **"Issues"** tab and we will attempt to remediate the issue as soon as possible.

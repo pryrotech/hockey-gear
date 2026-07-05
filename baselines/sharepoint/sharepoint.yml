@@ -1,0 +1,142 @@
+# ============================================
+# HockeyGear – SharePoint Baseline
+# ITSG‑33 Annex 3 & 4 Aligned
+# ============================================
+
+controls:
+
+  # -------------------------
+  # SharePoint Security
+  # -------------------------
+
+  - id: SPOT-ExternalSharing-1
+    title: "External Sharing Restricted"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-3"
+    control_name: "Access Enforcement"
+    service: "SharePoint"
+    category: "Sharing"
+    description: >
+      SharePoint external sharing should be restricted to reduce unintended
+      exposure of sensitive content.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Overly permissive sharing can expose sensitive data to unauthorized users.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query SharePoint external sharing settings"
+    rationale:
+      - "Supports ITSG‑33 AC-3 access enforcement"
+      - "Aligned with data exposure reduction guidance"
+    references:
+      - "Microsoft SharePoint sharing documentation"
+    status: "NotEvaluated"
+    tags:
+      - sharepoint
+      - sharing
+      - itsg33
+
+  - id: SPOT-ConditionalAccess-1
+    title: "Conditional Access for SharePoint Access"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-3"
+    control_name: "Access Enforcement"
+    service: "SharePoint"
+    category: "Access"
+    description: >
+      Conditional Access should be applied to SharePoint access to enforce
+      identity and device controls.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without Conditional Access, risky sign-ins may reach SharePoint content.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query SharePoint access policies"
+    rationale:
+      - "Supports ITSG‑33 AC-3 access enforcement"
+    references:
+      - "Microsoft SharePoint Conditional Access guidance"
+    status: "NotEvaluated"
+    tags:
+      - sharepoint
+      - conditional-access
+      - itsg33
+
+  - id: SPOT-Labeling-1
+    title: "Sensitivity Labeling Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "SharePoint"
+    category: "Data Protection"
+    description: >
+      Sensitivity labels should be applied to protect documents and sites
+      with appropriate classification controls.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without labeling, sensitive content may receive inconsistent protection.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query sensitivity label configuration"
+    rationale:
+      - "Supports ITSG‑33 SC-7 data protection"
+    references:
+      - "Microsoft Information Protection guidance"
+    status: "NotEvaluated"
+    tags:
+      - sharepoint
+      - labels
+      - itsg33
+
+  - id: SPOT-GuestAccess-1
+    title: "Guest Access Restricted"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-2"
+    control_name: "Account Management"
+    service: "SharePoint"
+    category: "Access"
+    description: >
+      Guest user access should be restricted to approved scenarios and sites.
+    expected_value: true
+    actual_value: null
+    severity: medium
+    impact: >
+      Guest access can increase the risk of unauthorized content exposure.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query guest access configuration"
+    rationale:
+      - "Supports ITSG‑33 AC-2 account management"
+    references:
+      - "Microsoft SharePoint guest access guidance"
+    status: "NotEvaluated"
+    tags:
+      - sharepoint
+      - guest-access
+      - itsg33

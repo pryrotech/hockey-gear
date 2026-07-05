@@ -1,0 +1,141 @@
+# ============================================
+# HockeyGear – Teams Baseline
+# ITSG‑33 Annex 3 & 4 Aligned
+# ============================================
+
+controls:
+
+  # -------------------------
+  # Teams Security
+  # -------------------------
+
+  - id: TEAMS-ExternalAccess-1
+    title: "External Access Restricted"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-3"
+    control_name: "Access Enforcement"
+    service: "Teams"
+    category: "Collaboration"
+    description: >
+      External access for Teams should be restricted to reduce unintended
+      exposure of internal collaboration content.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Overly permissive external access can expose sensitive team discussions.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Teams external access configuration"
+    rationale:
+      - "Supports ITSG‑33 AC-3 access enforcement"
+    references:
+      - "Microsoft Teams external access documentation"
+    status: "NotEvaluated"
+    tags:
+      - teams
+      - collaboration
+      - itsg33
+
+  - id: TEAMS-GuestAccess-1
+    title: "Guest Access Restricted"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-2"
+    control_name: "Account Management"
+    service: "Teams"
+    category: "Collaboration"
+    description: >
+      Guest access in Teams should be restricted to approved scenarios.
+    expected_value: true
+    actual_value: null
+    severity: medium
+    impact: >
+      Guest access can increase the risk of unauthorized content exposure.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Teams guest access settings"
+    rationale:
+      - "Supports ITSG‑33 AC-2 account management"
+    references:
+      - "Microsoft Teams guest access guidance"
+    status: "NotEvaluated"
+    tags:
+      - teams
+      - guest-access
+      - itsg33
+
+  - id: TEAMS-MeetingPolicy-1
+    title: "Meeting Policies Enforced"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "Teams"
+    category: "Meetings"
+    description: >
+      Teams meeting policies should enforce security controls such as lobby
+      and participant restrictions.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Weak meeting policies can expose sensitive meetings to unauthorized users.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Teams meeting policy settings"
+    rationale:
+      - "Supports ITSG‑33 SC-7 boundary protection"
+    references:
+      - "Microsoft Teams meeting policies documentation"
+    status: "NotEvaluated"
+    tags:
+      - teams
+      - meetings
+      - itsg33
+
+  - id: TEAMS-RecordingPolicy-1
+    title: "Recording Policies Enforced"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AU – Audit and Accountability"
+    control_id: "AU-2"
+    control_name: "Event Logging"
+    service: "Teams"
+    category: "Meetings"
+    description: >
+      Teams recording policies should be configured to control who can record
+      meetings and where recordings are stored.
+    expected_value: true
+    actual_value: null
+    severity: medium
+    impact: >
+      Uncontrolled recording can create data leakage and compliance issues.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Teams recording policy settings"
+    rationale:
+      - "Supports ITSG‑33 AU-2 monitoring and control"
+    references:
+      - "Microsoft Teams recording policies documentation"
+    status: "NotEvaluated"
+    tags:
+      - teams
+      - recording
+      - itsg33

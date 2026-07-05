@@ -1,0 +1,177 @@
+# ============================================
+# HockeyGear – Exchange Baseline
+# ITSG‑33 Annex 3 & 4 Aligned
+# ============================================
+
+controls:
+
+  # -------------------------
+  # Messaging Security
+  # -------------------------
+
+  - id: EXCH-ATP-1
+    title: "Advanced Threat Protection Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-3"
+    control_name: "Malicious Code Protection"
+    service: "Exchange"
+    category: "Messaging"
+    description: >
+      Exchange Online protection features should be enabled to detect and
+      block malicious messages before delivery.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without ATP protections, phishing and malware messages are more likely to reach users.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Exchange Online protection configuration"
+        - "Validate ATP state"
+    rationale:
+      - "Supports ITSG‑33 SI‑3 malicious code protection"
+      - "Aligned with messaging security guidance"
+    references:
+      - "Microsoft Exchange Online protection documentation"
+    status: "NotEvaluated"
+    tags:
+      - exchange
+      - messaging
+      - itsg33
+
+  - id: EXCH-MALWARE-1
+    title: "Malware Filtering Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "Exchange"
+    category: "Messaging"
+    description: >
+      Malware filtering should be enabled to block suspicious attachments
+      and message content.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Disabling malware filtering increases exposure to malicious payloads.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query malware filter policy settings"
+    rationale:
+      - "Supports ITSG‑33 SC-7 boundary protection"
+      - "Aligned with messaging filtering expectations"
+    references:
+      - "Microsoft Exchange Online malware filtering guidance"
+    status: "NotEvaluated"
+    tags:
+      - exchange
+      - messaging
+      - itsg33
+
+  - id: EXCH-SPAM-1
+    title: "Spam Filtering Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-4"
+    control_name: "System Monitoring"
+    service: "Exchange"
+    category: "Messaging"
+    description: >
+      Spam filtering should be enabled to reduce phishing and unsolicited
+      message volume.
+    expected_value: true
+    actual_value: null
+    severity: medium
+    impact: >
+      Without spam filtering, users face more phishing and abuse attempts.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query spam filter settings"
+    rationale:
+      - "Supports ITSG‑33 SI-4 monitoring and message filtering"
+    references:
+      - "Microsoft Exchange Online spam filtering guidance"
+    status: "NotEvaluated"
+    tags:
+      - exchange
+      - messaging
+      - itsg33
+
+  - id: EXCH-RETENTION-1
+    title: "Retention Policies Configured"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AU – Audit and Accountability"
+    control_id: "AU-2"
+    control_name: "Event Logging"
+    service: "Exchange"
+    category: "Compliance"
+    description: >
+      Retention policies should be configured to preserve business records
+      and support investigations.
+    expected_value: "Configured"
+    actual_value: null
+    severity: medium
+    impact: >
+      Missing retention policies can impede investigations and compliance efforts.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query retention policy configuration"
+    rationale:
+      - "Supports ITSG‑33 AU-2 logging and retention"
+    references:
+      - "Microsoft Exchange retention policy documentation"
+    status: "NotEvaluated"
+    tags:
+      - exchange
+      - compliance
+      - itsg33
+
+  - id: EXCH-DKIM-1
+    title: "DKIM Signing Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-8"
+    control_name: "Transmission Confidentiality and Integrity"
+    service: "Exchange"
+    category: "Mail Flow"
+    description: >
+      DKIM signing should be enabled to protect message integrity and reduce spoofing.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without DKIM, attackers can more easily spoof sender identities.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query DKIM signing status"
+    rationale:
+      - "Supports ITSG‑33 SC-8 message integrity"
+    references:
+      - "Microsoft Exchange DKIM documentation"
+    status: "NotEvaluated"
+    tags:
+      - exchange
+      - mail-flow
+      - itsg33
