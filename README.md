@@ -1,6 +1,10 @@
 ![HockeyGear Banner](assets/images/hockeygear_banner.png)
 
 ## 🏒 HockeyGear
+![PowerShell](https://img.shields.io/badge/PowerShell-Tool-blue)
+![License](https://img.shields.io/github/license/pryrotech/port-diagnostics-tool)
+![Maintained](https://img.shields.io/badge/Maintained-Yes-brightgreen)
+[![GitHub all releases](https://img.shields.io/github/downloads/pryrotech/hockey-gear/total.svg?cacheSeconds=3600)](https://github.com/pryrotech/hockey-gear/releases) [![Last Commit](https://img.shields.io/github/last-commit/pryrotech/hockey-gear)](https://github.com/pryrotech/hockey-gear/commits/main)
 
 
 ## Overview
