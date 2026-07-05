@@ -1,0 +1,302 @@
+# ============================================
+# HockeyGear – Entra Baseline
+# ITSG‑33 Annex 3 & 4 Aligned
+# ============================================
+
+controls:
+
+  # -------------------------
+  # Identity & Authentication
+  # -------------------------
+
+  - id: ENT-MFA-1
+    title: "MFA Required for All Users"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-2"
+    control_name: "Account Management"
+    service: "Entra"
+    category: "Identity"
+    description: >
+      Multi-factor authentication must be required for interactive sign-ins
+      to reduce credential compromise risk.
+    expected_value: true
+    actual_value: null
+    severity: critical
+    impact: >
+      Without MFA, stolen passwords can be used to access cloud resources.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query MFA enforcement settings"
+        - "Validate MFA coverage for users and administrators"
+    rationale:
+      - "Supports ITSG‑33 AC‑2 and IA-2 account protection"
+      - "Aligned with CCCS identity and access guidance"
+    references:
+      - "Microsoft Entra MFA documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - identity
+      - mfa
+      - itsg33
+
+  - id: ENT-CA-1
+    title: "Conditional Access Policies Configured"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-3"
+    control_name: "Access Enforcement"
+    service: "Entra"
+    category: "Access"
+    description: >
+      Conditional Access policies must be configured to enforce device,
+      location, and risk-based controls for sensitive applications.
+    expected_value: "Configured"
+    actual_value: null
+    severity: high
+    impact: >
+      Without Conditional Access, risky sign-ins may bypass important protection.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Conditional Access policy inventory"
+        - "Validate policy scope and enforcement"
+    rationale:
+      - "Supports ITSG‑33 AC-3 access enforcement"
+      - "Aligned with modern identity protection expectations"
+    references:
+      - "Microsoft Entra Conditional Access documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - conditional-access
+      - identity
+      - itsg33
+
+  - id: ENT-LEGACY-1
+    title: "Legacy Authentication Disabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-8"
+    control_name: "Transmission Confidentiality and Integrity"
+    service: "Entra"
+    category: "Authentication"
+    description: >
+      Legacy authentication protocols such as IMAP, POP, SMTP, and basic
+      authentication must be disabled to reduce credential theft exposure.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Legacy protocols are commonly abused by attackers and bypass modern MFA controls.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query legacy authentication settings"
+        - "Validate disabled protocol usage"
+    rationale:
+      - "Supports ITSG‑33 SC‑8 protection of authentication channels"
+      - "Aligned with CCCS identity hardening guidance"
+    references:
+      - "Microsoft Entra legacy authentication documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - authentication
+      - legacy-auth
+      - itsg33
+
+  - id: ENT-SSPR-1
+    title: "Self-Service Password Reset Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "IA – Identification and Authentication"
+    control_id: "IA-2"
+    control_name: "Identification and Authentication"
+    service: "Entra"
+    category: "Identity"
+    description: >
+      Self-service password reset should be enabled with strong verification
+      methods to support secure account recovery.
+    expected_value: true
+    actual_value: null
+    severity: medium
+    impact: >
+      Without a secure reset process, help desk burden and account lockout risk increase.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query SSPR configuration"
+        - "Validate authentication methods for password reset"
+    rationale:
+      - "Supports ITSG‑33 IA-2 authentication resilience"
+      - "Aligned with modern support and identity practices"
+    references:
+      - "Microsoft Entra self-service password reset documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - identity
+      - sspr
+      - itsg33
+
+  # -------------------------
+  # Security Controls
+  # -------------------------
+
+  - id: ENT-PWDL-1
+    title: "Password Protection Banned Password List Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "IA – Identification and Authentication"
+    control_id: "IA-5"
+    control_name: "Authenticator Management"
+    service: "Entra"
+    category: "Password"
+    description: >
+      Entra password protection should enforce a banned password list and
+      prevent the use of common or compromised credentials.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Weak and commonly used passwords increase the likelihood of account compromise.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query password protection settings"
+        - "Validate banned password list and custom blocklist"
+    rationale:
+      - "Supports ITSG‑33 IA-5 authenticator management"
+      - "Aligned with password hygiene expectations"
+    references:
+      - "Microsoft Entra password protection documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - password
+      - identity
+      - itsg33
+
+  - id: ENT-RISK-1
+    title: "User Risk Policies Configured"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "IR – Incident Response"
+    control_id: "IR-4"
+    control_name: "Incident Handling"
+    service: "Entra"
+    category: "Risk"
+    description: >
+      User risk policies must be configured to detect suspicious sign-in
+      activity and trigger appropriate remediation actions.
+    expected_value: "Configured"
+    actual_value: null
+    severity: high
+    impact: >
+      Without risk-based protections, compromised accounts may remain active.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query user risk policy configuration"
+        - "Validate remediation actions and enforcement"
+    rationale:
+      - "Supports ITSG‑33 IR-4 incident response for identity threats"
+      - "Aligned with adaptive access control practices"
+    references:
+      - "Microsoft Entra Identity Protection documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - identity-protection
+      - risk
+      - itsg33
+
+  - id: ENT-SIGNINRISK-1
+    title: "Sign-in Risk Policies Configured"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "IR – Incident Response"
+    control_id: "IR-4"
+    control_name: "Incident Handling"
+    service: "Entra"
+    category: "Risk"
+    description: >
+      Sign-in risk policies must be configured to challenge or block risky
+      authentication events in real time.
+    expected_value: "Configured"
+    actual_value: null
+    severity: high
+    impact: >
+      Without sign-in risk controls, attackers can exploit anomalous sign-ins.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query sign-in risk policy configuration"
+        - "Validate challenge and block actions"
+    rationale:
+      - "Supports ITSG‑33 IR-4 detection and response"
+      - "Aligned with modern identity threat detection"
+    references:
+      - "Microsoft Entra sign-in risk documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - identity-protection
+      - sign-in-risk
+      - itsg33
+
+  - id: ENT-ADMIN-1
+    title: "Privileged Admin Accounts Protected"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-2"
+    control_name: "Account Management"
+    service: "Entra"
+    category: "Administration"
+    description: >
+      Administrative accounts should be protected with elevated MFA,
+      restricted access, and dedicated monitoring.
+    expected_value: true
+    actual_value: null
+    severity: critical
+    impact: >
+      Compromise of privileged accounts can lead to widespread tenant compromise.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query privileged role assignments"
+        - "Validate MFA and administrative protections"
+    rationale:
+      - "Supports ITSG‑33 AC-2 privileged account protection"
+      - "Aligned with least-privilege administration guidance"
+    references:
+      - "Microsoft Entra privileged identity documentation"
+    status: "NotEvaluated"
+    tags:
+      - entra
+      - administration
+      - privileged-access
+      - itsg33

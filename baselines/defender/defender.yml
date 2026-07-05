@@ -1,0 +1,647 @@
+# ============================================
+# HockeyGear – Defender Baseline
+# ITSG‑33 Annex 3 & 4 Aligned
+# ============================================
+
+controls:
+
+  # -------------------------
+  # Endpoint – Core Protection
+  # -------------------------
+
+  - id: DEF-RT-1
+    title: "Real-time Protection Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-3"
+    control_name: "Malicious Code Protection"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Real-time protection must be enabled to detect and block malware
+      at the time of execution.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Disabling real-time protection significantly increases exposure
+      to malware and ransomware.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Defender endpoint configuration"
+        - "Validate real-time protection state"
+    rationale:
+      - "Supports ITSG‑33 SI‑3 malicious code protection"
+      - "Aligned with CCCS endpoint protection expectations"
+    references:
+      - "CCCS M365 Baseline – Endpoint Protection"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  - id: DEF-CDP-1
+    title: "Cloud-delivered Protection Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-3"
+    control_name: "Malicious Code Protection"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Cloud-delivered protection must be enabled to leverage up-to-date
+      threat intelligence and rapid signature updates.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without cloud-delivered protection, endpoints rely on stale
+      signatures and miss emerging threats.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query cloud-delivered protection state"
+    rationale:
+      - "Supports ITSG‑33 SI‑3 ongoing malicious code protection"
+      - "Aligned with modern endpoint security practices"
+    references:
+      - "Microsoft Defender Antivirus configuration guidance"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  - id: DEF-TP-1
+    title: "Tamper Protection Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-7"
+    control_name: "Software, Firmware, and Information Integrity"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Tamper protection prevents unauthorized changes to Defender
+      security settings.
+    expected_value: true
+    actual_value: null
+    severity: critical
+    impact: >
+      Attackers can disable security controls if tamper protection is off.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query tamper protection state"
+    rationale:
+      - "Supports ITSG‑33 SI‑7 integrity requirements"
+      - "Aligned with CCCS expectations for hardened endpoints"
+    references:
+      - "Microsoft Defender Tamper Protection guidance"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  - id: DEF-ASR-1
+    title: "Attack Surface Reduction Rules Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Attack Surface Reduction (ASR) rules reduce exposure to common
+      attack vectors such as Office macro abuse and script misuse.
+    expected_value: "Configured"
+    actual_value: null
+    severity: high
+    impact: >
+      Missing ASR rules increases susceptibility to phishing and malware.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query ASR rule configuration"
+        - "Validate enforcement mode"
+    rationale:
+      - "Supports ITSG‑33 SC‑7 boundary protection"
+      - "Aligned with CCCS endpoint hardening guidance"
+    references:
+      - "Microsoft ASR rules documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  - id: DEF-NP-1
+    title: "Network Protection Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Network protection blocks outbound connections to malicious
+      domains and IPs.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without network protection, endpoints can freely connect to
+      known malicious infrastructure.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query network protection configuration"
+    rationale:
+      - "Supports ITSG‑33 SC‑7 boundary protection"
+      - "Aligned with DNS and web filtering expectations"
+    references:
+      - "Microsoft Defender Network Protection guidance"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  - id: DEF-CFA-1
+    title: "Controlled Folder Access Enabled for Sensitive Data"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-3"
+    control_name: "Malicious Code Protection"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Controlled Folder Access protects critical folders from
+      unauthorized modification, reducing ransomware impact.
+    expected_value: "Enabled for sensitive paths"
+    actual_value: null
+    severity: high
+    impact: >
+      Without CFA, ransomware can encrypt or delete critical data
+      without additional barriers.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query CFA configuration"
+        - "Validate protected folder list"
+    rationale:
+      - "Supports ITSG‑33 SI‑3 protection against malicious code"
+      - "Aligned with ransomware mitigation practices"
+    references:
+      - "Microsoft Controlled Folder Access documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  - id: DEF-EDR-1
+    title: "EDR in Block Mode Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-4"
+    control_name: "System Monitoring"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Endpoint Detection and Response (EDR) in block mode allows
+      Defender to block malicious activity even when the primary AV
+      is not active.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without block mode, detections may be logged but not prevented.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query EDR block mode configuration"
+    rationale:
+      - "Supports ITSG‑33 SI‑4 monitoring and response"
+      - "Aligned with advanced endpoint detection expectations"
+    references:
+      - "Microsoft Defender EDR in block mode documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  - id: DEF-SAMPLE-1
+    title: "Automatic Sample Submission Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-3"
+    control_name: "Malicious Code Protection"
+    service: "Defender"
+    category: "Endpoint"
+    description: >
+      Automatic sample submission sends suspicious files to the
+      Defender service for deeper analysis.
+    expected_value: true
+    actual_value: null
+    severity: medium
+    impact: >
+      Disabling sample submission reduces detection quality for
+      emerging threats.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query sample submission configuration"
+    rationale:
+      - "Supports ITSG‑33 SI‑3 ongoing malicious code analysis"
+    references:
+      - "Microsoft Defender sample submission documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - endpoint
+      - itsg33
+
+  # -------------------------
+  # Email & Collaboration
+  # -------------------------
+
+  - id: DEF-SL-1
+    title: "Safe Links Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-4"
+    control_name: "System Monitoring"
+    service: "Defender"
+    category: "Email"
+    description: >
+      Safe Links protects users by scanning URLs at click time.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Disabling Safe Links increases phishing and credential theft risk.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Safe Links policy configuration"
+    rationale:
+      - "Supports ITSG‑33 SI‑4 monitoring of email links"
+      - "Aligned with CCCS email protection expectations"
+    references:
+      - "Microsoft Defender Safe Links documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - email
+      - itsg33
+
+  - id: DEF-SA-1
+    title: "Safe Attachments Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-3"
+    control_name: "Malicious Code Protection"
+    service: "Defender"
+    category: "Email"
+    description: >
+      Safe Attachments detonates and analyzes email attachments in
+      a sandbox before delivery.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without Safe Attachments, malicious payloads can reach users
+      directly via email.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Safe Attachments policy configuration"
+    rationale:
+      - "Supports ITSG‑33 SI‑3 malicious code protection for email"
+      - "Aligned with CCCS email security guidance"
+    references:
+      - "Microsoft Defender Safe Attachments documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - email
+      - itsg33
+
+  - id: DEF-APH-1
+    title: "Anti-phishing Policies Configured"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-2"
+    control_name: "Account Management"
+    service: "Defender"
+    category: "Email"
+    description: >
+      Anti-phishing policies must be configured to detect and block
+      spoofing, domain impersonation, and user impersonation.
+    expected_value: "Configured"
+    actual_value: null
+    severity: high
+    impact: >
+      Without robust anti-phishing policies, users are more likely
+      to fall victim to credential theft.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query anti-phishing policy configuration"
+        - "Validate impersonation protection settings"
+    rationale:
+      - "Supports ITSG‑33 AC‑2 account protection via email controls"
+      - "Aligned with CCCS phishing mitigation expectations"
+    references:
+      - "Microsoft Defender anti-phishing documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - email
+      - itsg33
+
+  - id: DEF-IMP-1
+    title: "Impersonation Protection for Priority Accounts"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-6"
+    control_name: "Least Privilege"
+    service: "Defender"
+    category: "Email"
+    description: >
+      Priority accounts (executives, admins, sensitive roles) must
+      be protected with impersonation detection and stricter policies.
+    expected_value: "Priority accounts configured"
+    actual_value: null
+    severity: high
+    impact: >
+      Without impersonation protection, high-value targets are more
+      susceptible to targeted phishing.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query priority account configuration"
+        - "Validate impersonation protection settings"
+    rationale:
+      - "Supports ITSG‑33 AC‑6 protection of high-value accounts"
+      - "Aligned with targeted phishing mitigation practices"
+    references:
+      - "Microsoft Defender priority account protection guidance"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - email
+      - itsg33
+
+  # -------------------------
+  # Identity – Defender for Identity
+  # -------------------------
+
+  - id: DEF-DI-SENSORS-1
+    title: "Defender for Identity Sensors Healthy"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-4"
+    control_name: "System Monitoring"
+    service: "Defender"
+    category: "Identity"
+    description: >
+      Defender for Identity sensors must be deployed and healthy on
+      domain controllers to monitor identity-related threats.
+    expected_value: "All sensors healthy"
+    actual_value: null
+    severity: high
+    impact: >
+      Without healthy sensors, identity threats such as lateral
+      movement and reconnaissance may go undetected.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query sensor health status"
+    rationale:
+      - "Supports ITSG‑33 SI‑4 monitoring of identity infrastructure"
+    references:
+      - "Microsoft Defender for Identity deployment guidance"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - identity
+      - itsg33
+
+  - id: DEF-DI-LMP-1
+    title: "Lateral Movement Path Detection Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "Defender"
+    category: "Identity"
+    description: >
+      Lateral movement path detection identifies risky paths attackers
+      could use to move between accounts and systems.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without lateral movement analysis, privilege escalation paths
+      remain unknown and unmitigated.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query lateral movement detection configuration"
+    rationale:
+      - "Supports ITSG‑33 SC‑7 analysis of internal movement paths"
+    references:
+      - "Microsoft Defender for Identity lateral movement documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - identity
+      - itsg33
+
+  - id: DEF-DI-HONEY-1
+    title: "Honeytoken Accounts Configured"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-4"
+    control_name: "System Monitoring"
+    service: "Defender"
+    category: "Identity"
+    description: >
+      Honeytoken accounts act as decoys to detect credential theft
+      and unauthorized use.
+    expected_value: "At least one honeytoken configured"
+    actual_value: null
+    severity: medium
+    impact: >
+      Without honeytokens, some attacker activity may blend in with
+      normal account usage.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query honeytoken configuration"
+    rationale:
+      - "Supports ITSG‑33 SI‑4 proactive monitoring"
+    references:
+      - "Microsoft Defender for Identity honeytoken guidance"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - identity
+      - itsg33
+
+  # -------------------------
+  # Apps – Defender for Cloud Apps
+  # -------------------------
+
+  - id: DEF-MCAS-OAUTH-1
+    title: "OAuth App Governance Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AC – Access Control"
+    control_id: "AC-3"
+    control_name: "Access Enforcement"
+    service: "Defender"
+    category: "Apps"
+    description: >
+      OAuth applications must be monitored and governed to prevent
+      excessive or risky permissions.
+    expected_value: "Governance policies configured"
+    actual_value: null
+    severity: high
+    impact: >
+      Unmonitored OAuth apps can exfiltrate data or perform actions
+      on behalf of users without oversight.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query app governance policies"
+        - "Identify high-risk OAuth apps"
+    rationale:
+      - "Supports ITSG‑33 AC‑3 enforcement of access via apps"
+    references:
+      - "Microsoft Defender for Cloud Apps app governance documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - apps
+      - itsg33
+
+  - id: DEF-MCAS-ANOM-1
+    title: "Anomaly Detection Policies Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SI – System and Information Integrity"
+    control_id: "SI-4"
+    control_name: "System Monitoring"
+    service: "Defender"
+    category: "Apps"
+    description: >
+      Anomaly detection policies must be enabled to identify unusual
+      user and app behavior.
+    expected_value: "Core anomaly policies enabled"
+    actual_value: null
+    severity: high
+    impact: >
+      Without anomaly detection, subtle data exfiltration or misuse
+      may go unnoticed.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query anomaly detection policy configuration"
+    rationale:
+      - "Supports ITSG‑33 SI‑4 monitoring of cloud app usage"
+    references:
+      - "Microsoft Defender for Cloud Apps anomaly detection documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - apps
+      - itsg33
+
+  - id: DEF-MCAS-IMPTRAVEL-1
+    title: "Impossible Travel Detection Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "IA – Identification and Authentication"
+    control_id: "IA-2"
+    control_name: "Identification and Authentication (Organizational Users)"
+    service: "Defender"
+    category: "Apps"
+    description: >
+      Impossible travel detection identifies logins from geographically
+      distant locations in unrealistic timeframes.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without impossible travel detection, compromised accounts may
+      be used from multiple regions without alerting.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query impossible travel policy configuration"
+    rationale:
+      - "Supports ITSG‑33 IA‑2 detection of anomalous authentication"
+    references:
+      - "Microsoft Defender for Cloud Apps impossible travel documentation"
+    status: "NotEvaluated"
+    tags:
+      - defender
+      - apps
+      - itsg33

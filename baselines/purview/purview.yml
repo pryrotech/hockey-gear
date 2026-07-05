@@ -1,0 +1,109 @@
+# ============================================
+# HockeyGear – Purview Baseline
+# ITSG‑33 Annex 3 & 4 Aligned
+# ============================================
+
+controls:
+
+  # -------------------------
+  # Purview Security
+  # -------------------------
+
+  - id: PURV-DataLossPrevention-1
+    title: "Data Loss Prevention Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "Purview"
+    category: "Data Protection"
+    description: >
+      Data Loss Prevention (DLP) policies should be enabled to detect and
+      prevent the unauthorized sharing of sensitive information.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without DLP, sensitive data can be shared beyond approved boundaries.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Purview DLP policy configuration"
+    rationale:
+      - "Supports ITSG‑33 SC-7 boundary protection"
+    references:
+      - "Microsoft Purview DLP documentation"
+    status: "NotEvaluated"
+    tags:
+      - purview
+      - dlp
+      - itsg33
+
+  - id: PURV-InformationProtection-1
+    title: "Information Protection Labels Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "SC – System and Communications Protection"
+    control_id: "SC-7"
+    control_name: "Boundary Protection"
+    service: "Purview"
+    category: "Data Protection"
+    description: >
+      Information protection labels should be enabled to classify and protect
+      sensitive information consistently.
+    expected_value: true
+    actual_value: null
+    severity: high
+    impact: >
+      Without labels, sensitive information may lack appropriate protection.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Purview label configuration"
+    rationale:
+      - "Supports ITSG‑33 SC-7 data protection"
+    references:
+      - "Microsoft Purview information protection guidance"
+    status: "NotEvaluated"
+    tags:
+      - purview
+      - labels
+      - itsg33
+
+  - id: PURV-RecordsManagement-1
+    title: "Records Management Enabled"
+    standard: "ITSG-33"
+    annex:
+      - "Annex 3 – Security Controls"
+      - "Annex 4 – Assessment Procedures"
+    control_family: "AU – Audit and Accountability"
+    control_id: "AU-2"
+    control_name: "Event Logging"
+    service: "Purview"
+    category: "Governance"
+    description: >
+      Records management should be enabled to preserve and govern content
+      according to policy requirements.
+    expected_value: true
+    actual_value: null
+    severity: medium
+    impact: >
+      Missing records management can weaken compliance and investigation readiness.
+    assessment_procedure:
+      method: "Automated"
+      steps:
+        - "Query Purview records management settings"
+    rationale:
+      - "Supports ITSG‑33 AU-2 governance and retention"
+    references:
+      - "Microsoft Purview records management documentation"
+    status: "NotEvaluated"
+    tags:
+      - purview
+      - governance
+      - itsg33
