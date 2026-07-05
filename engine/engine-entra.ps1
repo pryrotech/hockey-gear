@@ -1,16 +1,15 @@
 param(
-    [string]$BaselinePath = "$PSScriptRoot/../baselines/defender/defender.yml",
-    [string]$RuleRoot     = "$PSScriptRoot/../modules/scanner/rules/defender",
+    [string]$BaselinePath = "$PSScriptRoot/../baselines/entra/entra.yml",
+    [string]$RuleRoot     = "$PSScriptRoot/../modules/scanner/rules/entra",
     [switch]$ConnectTenant,
     [string]$ExchangeUserPrincipalName,
     [System.Management.Automation.PSCredential]$Credential,
     [switch]$ConnectGraph,
-    [string[]]$GraphScopes = @('SecurityEvents.Read.All','Policy.Read.All'),
+    [string[]]$GraphScopes = @('User.Read.All','Policy.Read.All','Directory.Read.All','IdentityRiskEvent.Read.All'),
     [switch]$UseDeviceAuthentication,
     [switch]$AsJson
 )
 
-# Requires: powershell-yaml module
 if (-not (Get-Module -ListAvailable -Name powershell-yaml)) {
     Write-Error "powershell-yaml module not found. Install-Module powershell-yaml"
     return
@@ -55,36 +54,13 @@ function Connect-Graph {
     }
 
     try {
-        if ($UseDeviceAuthentication) {
-            Connect-MgGraph -Scopes $Scopes -ErrorAction Stop
-        }
-        else {
-            Connect-MgGraph -Scopes $Scopes -ErrorAction Stop
-        }
+        Connect-MgGraph -Scopes $Scopes -ErrorAction Stop
         Write-Host 'Connected to Microsoft Graph.'
         return $true
     }
     catch {
         Write-Error $_.Exception.Message
         return $false
-    }
-}
-
-function Invoke-GraphQuery {
-    param(
-        [string]$Path
-    )
-
-    if (-not (Get-Command Invoke-MgGraphRequest -ErrorAction SilentlyContinue)) {
-        throw "Invoke-MgGraphRequest not available. Ensure Microsoft.Graph is installed and connected."
-    }
-
-    try {
-        $resp = Invoke-MgGraphRequest -Method GET -Uri $Path -ErrorAction Stop
-        return $resp
-    }
-    catch {
-        throw $_.Exception.Message
     }
 }
 
@@ -103,15 +79,19 @@ function Connect-Tenant {
     }
 
     try {
-        Write-Host 'Connecting to Exchange Online...'
-        Connect-ExchangeTenant -UserPrincipalName $ExchangeUserPrincipalName -Credential $Credential
-        Write-Host 'Connected to Exchange Online.'
+        if ($ExchangeUserPrincipalName -or $Credential) {
+            Write-Host 'Connecting to Exchange Online...'
+            Connect-ExchangeTenant -UserPrincipalName $ExchangeUserPrincipalName -Credential $Credential
+            Write-Host 'Connected to Exchange Online.'
+        }
+
         if ($ConnectGraph) {
             Write-Host 'Connecting to Microsoft Graph...'
             if (-not (Connect-Graph -Scopes $GraphScopes -UseDeviceAuthentication:$UseDeviceAuthentication)) {
                 throw 'Graph connection failed.'
             }
         }
+
         return $true
     }
     catch {
@@ -143,7 +123,6 @@ function Get-RulePath {
         [string]$ControlId
     )
 
-    # Map DEF-RT-1 → def-rt-1.ps1
     $fileName = ($ControlId.ToLower()) + ".ps1"
     $path     = Join-Path $RuleRoot $fileName
 
@@ -161,19 +140,18 @@ function Invoke-Rule {
         return [PSCustomObject]@{
             id           = $ControlId
             actual_value = $null
-            status       = "MissingRule"
-            details      = "No rule script found for control id."
+            status       = 'MissingRule'
+            details      = 'No rule script found for control id.'
         }
     }
 
     try {
         $result = & $RulePath
 
-        # Ensure minimum shape
-        if (-not $result.id)           { $result | Add-Member -NotePropertyName id           -NotePropertyValue $ControlId -Force }
-        if (-not $result.PSObject.Properties.Name -contains 'actual_value') { $result | Add-Member -NotePropertyName actual_value -NotePropertyValue $null -Force }
-        if (-not $result.status)       { $result | Add-Member -NotePropertyName status       -NotePropertyValue "Evaluated" -Force }
-        if (-not $result.details)      { $result | Add-Member -NotePropertyName details      -NotePropertyValue $null -Force }
+        if (-not $result.id) { $result | Add-Member -NotePropertyName id -NotePropertyValue $ControlId -Force }
+        if (-not ($result.PSObject.Properties.Name -contains 'actual_value')) { $result | Add-Member -NotePropertyName actual_value -NotePropertyValue $null -Force }
+        if (-not $result.status) { $result | Add-Member -NotePropertyName status -NotePropertyValue 'Evaluated' -Force }
+        if (-not $result.details) { $result | Add-Member -NotePropertyName details -NotePropertyValue $null -Force }
 
         return $result
     }
@@ -181,7 +159,7 @@ function Invoke-Rule {
         return [PSCustomObject]@{
             id           = $ControlId
             actual_value = $null
-            status       = "Error"
+            status       = 'Error'
             details      = $_.Exception.Message
         }
     }
@@ -197,43 +175,39 @@ function Compare-ResultToBaseline {
     $actual   = $RuleResult.actual_value
 
     $evaluation = switch ($RuleResult.status) {
-        "MissingRule" { "MissingRule" }
-        "Error"       { "Error" }
+        'MissingRule' { 'MissingRule' }
+        'Error'       { 'Error' }
         default {
-            if ($null -eq $actual) { "NotApplicable" }
-            elseif ($expected -is [string] -and $expected -eq "Configured") {
-                if ($actual) { "Pass" } else { "Fail" }
+            if ($null -eq $actual) { 'NotApplicable' }
+            elseif ($expected -is [string] -and $expected -eq 'Configured') {
+                if ($actual) { 'Pass' } else { 'Fail' }
             }
             elseif ($expected -is [bool]) {
-                if ($actual -eq $expected) { "Pass" } else { "Fail" }
+                if ($actual -eq $expected) { 'Pass' } else { 'Fail' }
             }
-            else { "Info" }
+            else { 'Info' }
         }
     }
 
     [PSCustomObject]@{
-        id              = $Control.id
-        title           = $Control.title
-        service         = $Control.service
-        category        = $Control.category
-        control_family  = $Control.control_family
-        control_id      = $Control.control_id
-        control_name    = $Control.control_name
-        expected_value  = $expected
-        actual_value    = $actual
-        severity        = $Control.severity
-        impact          = $Control.impact
-        rationale       = $Control.rationale
-        references      = $Control.references
-        engine_status   = $RuleResult.status
-        evaluation      = $evaluation
-        rule_details    = $RuleResult.details
+        id             = $Control.id
+        title          = $Control.title
+        service        = $Control.service
+        category       = $Control.category
+        control_family = $Control.control_family
+        control_id     = $Control.control_id
+        control_name   = $Control.control_name
+        expected_value = $expected
+        actual_value   = $actual
+        severity       = $Control.severity
+        impact         = $Control.impact
+        rationale      = $Control.rationale
+        references     = $Control.references
+        engine_status  = $RuleResult.status
+        evaluation     = $evaluation
+        rule_details   = $RuleResult.details
     }
 }
-
-# -------------------------
-# Main
-# -------------------------
 
 try {
     $controls = Import-Baseline -Path $BaselinePath
