@@ -4,11 +4,11 @@ param(
     [switch]$ConnectTenant,
     [string]$ExchangeUserPrincipalName,
     [System.Management.Automation.PSCredential]$Credential,
+    [switch]$ConnectGraph,
+    [string[]]$GraphScopes = @('SecurityEvents.Read.All','Policy.Read.All'),
+    [switch]$UseDeviceAuthentication,
     [switch]$AsJson
 )
-
-
-
 
 # Requires: powershell-yaml module
 if (-not (Get-Module -ListAvailable -Name powershell-yaml)) {
@@ -40,11 +40,62 @@ function Connect-ExchangeTenant {
     Connect-ExchangeOnline @connectParams
 }
 
+function Connect-Graph {
+    param(
+        [string[]]$Scopes,
+        [switch]$UseDeviceAuthentication
+    )
+
+    if (-not (Get-Command Connect-MgGraph -ErrorAction SilentlyContinue)) {
+        if (-not (Get-Module -ListAvailable -Name Microsoft.Graph)) {
+            throw "Microsoft.Graph module not found. Install-Module Microsoft.Graph"
+        }
+
+        Import-Module Microsoft.Graph -ErrorAction Stop
+    }
+
+    try {
+        if ($UseDeviceAuthentication) {
+            Connect-MgGraph -Scopes $Scopes -ErrorAction Stop
+        }
+        else {
+            Connect-MgGraph -Scopes $Scopes -ErrorAction Stop
+        }
+        Write-Host 'Connected to Microsoft Graph.'
+        return $true
+    }
+    catch {
+        Write-Error $_.Exception.Message
+        return $false
+    }
+}
+
+function Invoke-GraphQuery {
+    param(
+        [string]$Path
+    )
+
+    if (-not (Get-Command Invoke-MgGraphRequest -ErrorAction SilentlyContinue)) {
+        throw "Invoke-MgGraphRequest not available. Ensure Microsoft.Graph is installed and connected."
+    }
+
+    try {
+        $resp = Invoke-MgGraphRequest -Method GET -Uri $Path -ErrorAction Stop
+        return $resp
+    }
+    catch {
+        throw $_.Exception.Message
+    }
+}
+
 function Connect-Tenant {
     param(
         [switch]$ConnectTenant,
         [string]$ExchangeUserPrincipalName,
-        [System.Management.Automation.PSCredential]$Credential
+        [System.Management.Automation.PSCredential]$Credential,
+        [switch]$ConnectGraph,
+        [string[]]$GraphScopes,
+        [switch]$UseDeviceAuthentication
     )
 
     if (-not $ConnectTenant) {
@@ -55,6 +106,12 @@ function Connect-Tenant {
         Write-Host 'Connecting to Exchange Online...'
         Connect-ExchangeTenant -UserPrincipalName $ExchangeUserPrincipalName -Credential $Credential
         Write-Host 'Connected to Exchange Online.'
+        if ($ConnectGraph) {
+            Write-Host 'Connecting to Microsoft Graph...'
+            if (-not (Connect-Graph -Scopes $GraphScopes -UseDeviceAuthentication:$UseDeviceAuthentication)) {
+                throw 'Graph connection failed.'
+            }
+        }
         return $true
     }
     catch {
@@ -186,7 +243,7 @@ catch {
     return
 }
 
-if (-not (Connect-Tenant -ConnectTenant:$ConnectTenant -ExchangeUserPrincipalName $ExchangeUserPrincipalName -Credential $Credential)) {
+if (-not (Connect-Tenant -ConnectTenant:$ConnectTenant -ExchangeUserPrincipalName $ExchangeUserPrincipalName -Credential $Credential -ConnectGraph:$ConnectGraph -GraphScopes $GraphScopes -UseDeviceAuthentication:$UseDeviceAuthentication)) {
     Write-Error 'Tenant connection failed. Aborting evaluation.'
     return
 }

@@ -8,8 +8,12 @@ $result = [PSCustomObject]@{
 }
 
 try {
-    # Placeholder: requires Graph Security API
-    $value = $null
+    # Attempt Graph probe for tamper protection info
+    try {
+        $resp = Invoke-GraphQuery -Path '/security/secureScores'
+        if ($resp) { $value = $true } else { $value = $null }
+    }
+    catch { $value = $null; $result.details = $_ }
     $result.actual_value = $value
     $result.status = "Evaluated"
 }

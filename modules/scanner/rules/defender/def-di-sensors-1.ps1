@@ -8,8 +8,21 @@ $result = [PSCustomObject]@{
 }
 
 try {
-    # Placeholder: requires MDI API
-    $value = $null
+    try {
+        $resp = Invoke-GraphQuery -Path '/security/alerts?$filter=contains(title, ''sensor'')&$top=1'
+        if ($resp -and $resp.value -and $resp.value.Count -gt 0) {
+            $value = $false
+            $result.details = 'Defender for Identity sensor health alerts detected.'
+        }
+        else {
+            $value = $true
+        }
+    }
+    catch {
+        $value = $null
+        $result.details = $_
+    }
+
     $result.actual_value = $value
     $result.status = "Evaluated"
 }
